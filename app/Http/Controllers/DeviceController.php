@@ -14,7 +14,12 @@ class DeviceController extends Controller
      */
     public function index()
     {
-        //
+        $all_devices = Device::all();
+        // echo "<pre/>";
+        // print_r($all_devices);
+        return view("crud.index",[
+            "devices" => $all_devices
+        ]);
     }
 
     /**
@@ -24,7 +29,7 @@ class DeviceController extends Controller
      */
     public function create()
     {
-        //
+        return view("crud.add-device");
     }
 
     /**
@@ -35,7 +40,18 @@ class DeviceController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // print_r($request->all());
+        $device = new Device();
+
+        $device->name = $request->name;
+        $device->status = $request->status;
+
+        $device->save();
+
+        //Setting flash message
+        $request->session()->flash("success", "New Device Created Succesfully");
+
+        return redirect("device");
     }
 
     /**
@@ -57,7 +73,9 @@ class DeviceController extends Controller
      */
     public function edit(Device $device)
     {
-        //
+        return view("crud.edit-device", [
+            "device" => $device //model binding
+        ]);
     }
 
     /**
