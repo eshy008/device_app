@@ -10,9 +10,11 @@
     </div>
     <div class="panel-body">
           
-      <form class="form-horizontal" method="post" action="{{ route('device.store') }}">
+      <form class="form-horizontal" method="post" action="{{ route('device.update', $device->id) }}">
 
         @csrf
+
+        @method("patch")
 
         <div class="form-group">
           <label class="control-label col-sm-2" for="Name">Name:</label>

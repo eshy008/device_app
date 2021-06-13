@@ -85,9 +85,20 @@ class DeviceController extends Controller
      * @param  \App\Models\Device  $device
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Device $device)
+    public function update(Request $request, $id)
     {
-        //
+
+        $device = Device::find($id);
+
+        $device->name = $request->name;
+        $device->status = $request->status;
+
+        $device->save();
+
+        $request->session()->flash("success", "Device has be been updated successfilly");
+
+        return redirect("device");
+
     }
 
     /**
@@ -98,6 +109,8 @@ class DeviceController extends Controller
      */
     public function destroy(Device $device)
     {
-        //
+        $device->delete();
+
+        return redirect()->route("device.index")->with("success", "Device name: {$device->name}, has been deleted successfully");
     }
 }
